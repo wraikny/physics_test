@@ -1,13 +1,14 @@
 ﻿namespace physics_test
 
 module Math =
-    let pi = 3.14159265f
+    module Angle =
+        let pi = 3.14159265f
 
-    let degree_to_radian d =
-        d / 180.0f * pi
+        let degree_to_radian d =
+            d / 180.0f * pi
 
-    let radian_to_degree d =
-        d * 180.0f / pi
+        let radian_to_degree d =
+            d * 180.0f / pi
 
     type Vec2F =
         {
