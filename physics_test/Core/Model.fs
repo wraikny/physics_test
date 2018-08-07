@@ -1,5 +1,6 @@
 ﻿namespace physics_test.core.model
 
+open physics_test
 open physics_test.core
 
 open System.Collections.Generic
@@ -16,16 +17,19 @@ type Model(scale, world_setting) =
         let destroy_pairs =
             objects
             |> Seq.filter(fun pair ->
+                let object = pair.Value
                 let lb = world.setting.lower_bound / world.scale
                 let ub = world.setting.upper_bound / world.scale
 
-                let size = ub - lb
+                let size = object.shape |> function
+                    | physics.Rectangle size ->
+                        size
+                    | physics.Circle radius ->
+                        { Math.Vec2F.x = 1.0f; Math.Vec2F.y = 1.0f } * 2.0f * radius
 
-                let n = 0.5f
+                let rx, ry = size.x, size.y
 
-                let rx, ry = n * size.x, n * size.y
-
-                let p = pair.Value.body.GetPosition()
+                let p = object.body.GetPosition()
 
                 (
                     (lb.x - rx < p.X && p.X < ub.x + rx)

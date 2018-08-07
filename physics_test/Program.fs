@@ -51,15 +51,19 @@ type MainScene() =
                 is_set_mass_from_shapes = true
             }
 
-        if asd.Engine.Mouse.LeftButton.ButtonState = asd.MouseButtonState.Push then
+        let KeyPush =
+            asd.Engine.Keyboard.GetKeyState
+            >> (=) asd.KeyState.Push
+
+        if KeyPush asd.Keys.Z then
             
             core.physics.Object.init model.World
                 setting
             |> model.add_object
             |> ignore
 
-        
-        if asd.Engine.Mouse.RightButton.ButtonState = asd.MouseButtonState.Push then
+
+        if KeyPush asd.Keys.X then
             
             core.physics.Object.init model.World
                 { setting with
